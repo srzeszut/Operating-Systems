@@ -4,14 +4,14 @@ LIB=lib_wc
 
 
 all:
-		make libstatic
-		make libshared
+		make static
+		make shared
 
-libstatic: $(LIB).c
+static: $(LIB).c
 		$(CC) $(CFLAGS) $(LIB).c
 		ar rcs $(LIB).a $(LIB).o
 
-libshared:
+shared:
 		$(CC) -fPIC $(CFLAGS) $(LIB).c
 
 clean:
