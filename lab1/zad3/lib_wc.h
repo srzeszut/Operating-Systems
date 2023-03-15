@@ -15,7 +15,6 @@ typedef struct{
 
 #ifdef USE_DLL
 
-
     void (*LibMemory_init ) (LibMemory* ,size_t  );
     void (*LibMemory_addBlock) (LibMemory* , char* );
     char* (*LibMemory_getBlock) (LibMemory* ,int );

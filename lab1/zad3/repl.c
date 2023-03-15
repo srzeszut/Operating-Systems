@@ -15,14 +15,14 @@ bool isInitialized=false;
 void parseCommand(char* commandLine,char** output){
 
     int command_start=0;
-    int lineLength=strlen(commandLine)
+    int lineLength=strlen(commandLine);
     int command_end=strlen(commandLine)-1;
     int arg_start=-1;
     int arg_end= strlen(commandLine)-1;
     for(int i=0;i<strlen(commandLine);i++){
-            if(commandLine[i]==' '){continue;}
-            else{command_start=i;break;}
-        }
+        if(commandLine[i]==' '){continue;}
+        else{command_start=i;break;}
+    }
     for(int i=command_start;i<lineLength;i++){
         if(commandLine[i]!=' '){continue;}
         else{command_end=i;break;}
