@@ -3,21 +3,14 @@
 #include <ctype.h>
 #include "string.h"
 #include <stdbool.h>
+#include <sys/times.h>
+#include <time.h>
 #include "lib_wc.h"
+#include "dlopen.h"
 #define MAX_COMMAND_SIZE 1024
 
 bool active = true;
-
-typedef enum{
-    INIT,
-    COUNT,
-    SHOW,
-    DELETE,
-    DESTROY,
-    EXIT,
-}Command;
-
-
+bool isInitialized=false;
 
 void parseCommand(char* commandLine,char** output){
 
@@ -51,9 +44,20 @@ void parseCommand(char* commandLine,char** output){
 
 }
 void init(LibMemory* lib_memory,size_t size){
-    LibMemory_init(lib_memory,size);
+    if(!isInitialized){
+        LibMemory_init(lib_memory,size);
+        isInitialized=true;
+    } else{
+        fprintf(stderr, "Run destroy before another initialization.\n");
+        return;
+    }
+
 }
 void count(LibMemory* lib_memory,char* filepath){
+    if(!isInitialized){
+        fprintf(stderr, "Memory not yet initialized.\n");
+        return;
+    }
     if(lib_memory == NULL){
         fprintf(stderr, "Memory not yet initialized.\n");
         return;
@@ -62,29 +66,41 @@ void count(LibMemory* lib_memory,char* filepath){
 
 }
 void show(LibMemory* lib_memory,int index){
+    if(!isInitialized){
+        fprintf(stderr, "Memory not yet initialized.\n");
+        return;
+    }
     char* wc_output=LibMemory_getBlock(lib_memory,index);
     if(wc_output!=NULL){
         printf("wc: %s\n",wc_output);
+
     }
 
 
 }
 void delete(LibMemory* lib_memory,int index){
+    if(!isInitialized){
+        fprintf(stderr, "Memory not yet initialized.\n");
+        return;
+    }
     LibMemory_removeBlock(lib_memory,index);
 }
 void destroy(LibMemory* lib_memory){
+    if(!isInitialized){
+        fprintf(stderr, "Memory not yet initialized.\n");
+        return;
+    }
     LibMemory_destroy(lib_memory);
+    isInitialized=false;
 }
 
 bool checkIntArgs(char* args){
 
     if(strlen(args)==0){
-//        printf("mało\n");
         return false;
     }
     for(int i=0;i< strlen(args);i++){
         if(!isdigit(args[i])){
-//            printf("nie\n");
             return false;
         }
     }
@@ -101,12 +117,10 @@ void runCommand(LibMemory* lib_memory,char** commandAndArgs){
                     return;
                 }
                 arg = atoi(commandAndArgs[1]);
-//                printf("wywoluje");
                 init(lib_memory, arg);
 
             }
             else if (strcmp(commandAndArgs[0],"count")==0) {
-//                printf("w count: %p\n",lib_memory);
                 count(lib_memory, commandAndArgs[1]);
 
             }
@@ -142,22 +156,54 @@ void runCommand(LibMemory* lib_memory,char** commandAndArgs){
         }
 
 }
+//time functions
+typedef struct{
+    clock_t realtime;
+    clock_t usertime;
+    clock_t systemtime;
+}TimeStruct;
+
+TimeStruct measureTime(){
+    TimeStruct ts;
+    struct tms start_tms;
+    ts.realtime=times(&start_tms);
+    ts.usertime=start_tms.tms_utime;
+    ts.systemtime=start_tms.tms_stime;
+    return ts;
+
+
+}
+void printTimes (TimeStruct* start,TimeStruct* end){
+    printf("Real time: %f s, ",10000*(double)(end->realtime-start->realtime)/CLOCKS_PER_SEC);
+    printf("User time: %f s, ",10000*(double)(end->usertime-start->usertime)/CLOCKS_PER_SEC);
+    printf("System time: %f s\n",10000*(double)(end->systemtime-start->systemtime)/CLOCKS_PER_SEC);
+}
+
 
 int main() {
+    loadSymbol("lib_wc.so");
     LibMemory *lib_memory = malloc(sizeof(LibMemory));
+
     char commandLine[MAX_COMMAND_SIZE];
     while (active) {
         printf("[REPL]>> ");
         if (fgets(commandLine, MAX_COMMAND_SIZE, stdin) != NULL) {
-            char *commandAndArgs[2] = {"0", "1"};
+            TimeStruct start = measureTime();
+            char *commandAndArgs[2];
             parseCommand(commandLine, commandAndArgs);
             fflush(NULL);
 //            printf(" output0: %s\n", commandAndArgs[0]);
 //            if (commandAndArgs[1] != NULL) { printf(" output1: %s\n", commandAndArgs[1]); }//free na koncu
             runCommand(lib_memory,commandAndArgs);
             fflush(NULL);
+//            sleep(1);
+            free(commandAndArgs[0]);
+            free(commandAndArgs[1]);
+            TimeStruct end = measureTime();
+            printTimes(&start,&end);
 
 
         }
     }
+    closeHandle();
 }

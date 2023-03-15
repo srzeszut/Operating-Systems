@@ -1,18 +1,17 @@
 CC=gcc
-CFLAGS=-Wall -c
+CFLAGS=-Wall -Wpedantic -Werror
 LIB=lib_wc
+SOURCES= $(wildcard *.c)
 
 
-all:
-		make static
-		make shared
+all: static shared
 
-static: $(LIB).c
-		$(CC) $(CFLAGS) $(LIB).c
-		ar rcs $(LIB).a $(LIB).o
+static: $(SOURCES)
+		$(CC) $(CFLAGS) -c $(SOURCES)
+		ar rcs $(LIB).a $(SOURCES:.c=.o)
 
-shared:
-		$(CC) -fPIC $(CFLAGS) $(LIB).c
-
+shared: $(SOURCES)
+		$(CC) -fPIC -c $(CFLAGS) $(SOURCES)
+		$(CC) -shared $(CFLAGS) -o $(LIB).so $(SOURCES:.c=.o)
 clean:
-		rm -f *.o *.a
+		rm -f *.o *.a *.so
