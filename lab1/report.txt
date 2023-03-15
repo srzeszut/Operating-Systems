@@ -1,0 +1,1 @@
+Wyniki pomiarów czasu podczas testów na każdym poziomie optymalizacji są takie same czyli równe 0. W czasach użytkownika i systemowym może to wynikać z pewnych opcji systemu, ponieważ gdy dodałem komende sleep to czas rzeczywisty, w przeciwieństwie do pozostałych juz nie wynosił 0.

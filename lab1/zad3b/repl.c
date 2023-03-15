@@ -110,51 +110,51 @@ bool checkIntArgs(char* args){
 }
 
 void runCommand(LibMemory* lib_memory,char** commandAndArgs){
-    if(commandAndArgs!=NULL) {
-        int arg;
-        if (strcmp(commandAndArgs[0],"init")==0) {
-            if (!checkIntArgs(commandAndArgs[1])) {
-                fprintf(stderr, "init: Invalid argument.\n");
-                return;
+        if(commandAndArgs!=NULL) {
+            int arg;
+            if (strcmp(commandAndArgs[0],"init")==0) {
+                if (!checkIntArgs(commandAndArgs[1])) {
+                    fprintf(stderr, "init: Invalid argument.\n");
+                    return;
+                }
+                arg = atoi(commandAndArgs[1]);
+                init(lib_memory, arg);
+
             }
-            arg = atoi(commandAndArgs[1]);
-            init(lib_memory, arg);
+            else if (strcmp(commandAndArgs[0],"count")==0) {
+                count(lib_memory, commandAndArgs[1]);
 
-        }
-        else if (strcmp(commandAndArgs[0],"count")==0) {
-            count(lib_memory, commandAndArgs[1]);
-
-        }
-        else if (strcmp(commandAndArgs[0],"show")==0) {
-            if (!checkIntArgs(commandAndArgs[1])) {
-                fprintf(stderr, "show: Invalid argument.\n");
-                return;
             }
-            arg = atoi(commandAndArgs[1]);
-            show(lib_memory, arg);
-        }
-        else if (strcmp(commandAndArgs[0],"delete")==0) {
-            if (!checkIntArgs(commandAndArgs[1])) {
-                fprintf(stderr, "delete: Invalid argument.\n");
-                return;
+            else if (strcmp(commandAndArgs[0],"show")==0) {
+                if (!checkIntArgs(commandAndArgs[1])) {
+                    fprintf(stderr, "show: Invalid argument.\n");
+                    return;
+                }
+                arg = atoi(commandAndArgs[1]);
+                show(lib_memory, arg);
             }
-            arg = atoi(commandAndArgs[1]);
-            delete(lib_memory, arg);
+            else if (strcmp(commandAndArgs[0],"delete")==0) {
+                if (!checkIntArgs(commandAndArgs[1])) {
+                    fprintf(stderr, "delete: Invalid argument.\n");
+                    return;
+                }
+                arg = atoi(commandAndArgs[1]);
+                delete(lib_memory, arg);
 
-        }
-        else if (strcmp(commandAndArgs[0],"destroy")==0) {
-            destroy(lib_memory);
+            }
+            else if (strcmp(commandAndArgs[0],"destroy")==0) {
+                destroy(lib_memory);
 
-        }
-        else if(strcmp(commandAndArgs[0],"exit")==0){
-            active = false;
+            }
+            else if(strcmp(commandAndArgs[0],"exit")==0){
+                active = false;
 
-        }
-        else{
-            fprintf(stderr, "Invalid command.\n");
+            }
+            else{
+                fprintf(stderr, "Invalid command.\n");
 
+            }
         }
-    }
 
 }
 //time functions

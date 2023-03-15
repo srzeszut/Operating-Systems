@@ -1,0 +1,35 @@
+[REPL]>> Initialized memory block with size: 5
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Real time: 0.010000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> wc:  33  58 802 dlopen.h
+
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> wc:  115  266 3071 lib_wc.c
+
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> wc:  35  79 828 lib_wc.h
+
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> wc:  36 101 884 Makefile
+
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> wc:  206  378 5761 repl.c
+
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Removed block at index: 0
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Removed block at index: 1
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Removed block at index: 2
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Removed block at index: 3
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Removed block at index: 4
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Destroyed block
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+[REPL]>> Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s

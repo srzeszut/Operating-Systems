@@ -172,7 +172,6 @@ TimeStruct measureTime(){
     ts.systemtime=start_tms.tms_stime;
     return ts;
 
-
 }
 void printTimes (TimeStruct* start,TimeStruct* end){
     printf("Real time: %f s, ",10000*(double)(end->realtime-start->realtime)/CLOCKS_PER_SEC);
@@ -192,11 +191,9 @@ int main() {
             TimeStruct start = measureTime();
             char *commandAndArgs[2];
             parseCommand(commandLine, commandAndArgs);
-            fflush(NULL);
 //            printf(" output0: %s\n", commandAndArgs[0]);
-//            if (commandAndArgs[1] != NULL) { printf(" output1: %s\n", commandAndArgs[1]); }//free na koncu
+//            if (commandAndArgs[1] != NULL) { printf(" output1: %s\n", commandAndArgs[1]); }
             runCommand(lib_memory,commandAndArgs);
-            fflush(NULL);
 //            sleep(1);
             free(commandAndArgs[0]);
             free(commandAndArgs[1]);

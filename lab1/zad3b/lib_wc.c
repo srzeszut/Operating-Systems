@@ -105,6 +105,8 @@ void LibMemory_addBlock (LibMemory* lib_memory, char* filepath){
         lib_memory->curr_size++;
         remove(tmp_path);
 
+
+
     }
 
 

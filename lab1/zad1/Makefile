@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wpedantic -Werror
+CFLAGS=-Wall
 LIB=lib_wc
 SOURCES= $(wildcard *.c)
 
