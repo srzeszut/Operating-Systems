@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include<string.h>
 #include <stdbool.h>
+#include <sys/times.h>
+#include <time.h>
 
 bool findInFile(char sign, char* filepath){
     char buff;
@@ -31,12 +33,33 @@ void changeInFile(char old_sign,char new_sign,char* filepath_from,char* filepath
     fclose(file_to);
     fclose(file_from);
 }
+//time functions
+typedef struct{
+    clock_t realtime;
+    clock_t usertime;
+    clock_t systemtime;
+}TimeStruct;
 
+TimeStruct measureTime(){
+    TimeStruct ts;
+    struct tms start_tms;
+    ts.realtime=times(&start_tms);
+    ts.usertime=start_tms.tms_utime;
+    ts.systemtime=start_tms.tms_stime;
+    return ts;
+
+}
+void printTimes (TimeStruct* start,TimeStruct* end){
+    printf("Real time: %f s, ",10000*(double)(end->realtime-start->realtime)/CLOCKS_PER_SEC);
+    printf("User time: %f s, ",10000*(double)(end->usertime-start->usertime)/CLOCKS_PER_SEC);
+    printf("System time: %f s\n",10000*(double)(end->systemtime-start->systemtime)/CLOCKS_PER_SEC);
+}
 
 
 
 int main(int argc, char *argv[])
 {
+    TimeStruct start=measureTime();
     char* to_find = argv[1];
     char* to_change = argv[2];
     char* file_to_find=argv[3];
@@ -52,5 +75,8 @@ int main(int argc, char *argv[])
         printf("Characters changed.\n");
     }
 //    printf("ARGS: %s %s %s %s\n",to_find,to_change,file_to_find,file_to_change);
-
+    TimeStruct stop=measureTime();
+    printf("change_lib\n");
+    printTimes(&start,&stop);
+    printf("\n");
 }
