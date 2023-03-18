@@ -54,7 +54,7 @@ void LibMemory_destroy(LibMemory* lib_memory){
     LibMemory_emptyArray(lib_memory);
     free(lib_memory->memory);
     free(lib_memory->holes);
-//    free(lib_memory);
+    free(lib_memory);
 
     printf("Destroyed block\n");
 }

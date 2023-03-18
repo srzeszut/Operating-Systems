@@ -64,6 +64,7 @@ int main(int argc, char *argv[])
     char* to_change = argv[2];
     char* file_to_find=argv[3];
     char* file_to_change=argv[4];
+//    printf("argc: %d\n",argc);
 
     if(strlen(to_find)!=1 || strlen(to_change)!=1){
         fprintf(stderr, "First and second argument must be a single character.\n");
