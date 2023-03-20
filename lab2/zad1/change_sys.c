@@ -7,6 +7,7 @@
 #include <sys/times.h>
 #include <time.h>
 
+int wr_ret;
 bool findInFile(char sign, char* filepath){
     char buff;
 //    printf("character %c in file %s.\n", sign,filepath);
@@ -29,10 +30,10 @@ void changeInFile(char old_sign,char new_sign,char* filepath_from,char* filepath
     int file_to = open(filepath_to,O_WRONLY|O_CREAT,S_IRUSR|S_IWUSR);
     while(read(file_from,&buff,1)==1){
         if(buff==old_sign){
-            write(file_to,&new_sign,1);
+            wr_ret=write(file_to,&new_sign,1);
             continue;
         }
-        write(file_to,&buff,1);
+        wr_ret=write(file_to,&buff,1);
 
     }
     close(file_to);
