@@ -2,10 +2,10 @@ CC=gcc
 CFLAGS=-Wall
 LIB=change_lib
 SYS=change_sys
-TEST1:= c U Makefile badmakefiletmp.txt
-TEST2:= } B change_lib.c badchangeBtmp.txt
-TEST3:= = 9 change_sys.c badchange9tmp.txt
-TEST4:= a b Makefile badmakefiletmp.txt ; tr a b < Makefile > tmp ; diff -s tmp badmakefiletmp.txt >dif.txt
+TEST1:= c U Makefile tmp1.txt
+TEST2:= } B change_lib.c tmp2.txt
+TEST3:= = 9 change_sys.c tmp3.txt
+TEST4:= a b Makefile tmp1.txt >/dev/null; tr a b < Makefile > tmp ; diff -s tmp tmp1.txt >dif.txt
 OPT_FLAG=-Os
 
 all: lib sys time
@@ -25,8 +25,8 @@ time: sys lib
 		./$(SYS) $(TEST2) >>  pomiar_zad_1.txt
 		./$(LIB) $(TEST3) >>  pomiar_zad_1.txt
 		./$(SYS) $(TEST3) >>  pomiar_zad_1.txt
-		./$(SYS) $(TEST4) >>  pomiar_zad_1.txt
+		./$(LIB) $(TEST4) >>  pomiar_zad_1.txt
 		./$(SYS) $(TEST4) >>  pomiar_zad_1.txt
 
 clean:
-		rm -f *.o $(LIB) $(SYS) *.txt tmp
+		rm -f *.o $(LIB) $(SYS) tmp?.txt tmp dif.txt

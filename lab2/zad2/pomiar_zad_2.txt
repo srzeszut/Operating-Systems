@@ -1,0 +1,52 @@
+FILES: test.txt rev1.txt 
+Block size: 1
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+FILES: copy.c rev2 
+Block size: 1
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+FILES: Makefile rev3.txt 
+Block size: 1
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Files copy_1 and tmp2 are identical
+FILES: test.txt rev1.txt 
+Block size: 1024
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+FILES: copy.c rev2 
+Block size: 1024
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+FILES: Makefile rev3.txt 
+Block size: 1024
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Files copy_1024 and tmp2 are identical
+FILES: test.txt rev1.txt 
+Block size: 1
+Real time: 0.010000 s, User time: 0.000000 s, System time: 0.000000 s
+
+FILES: copy.c rev2 
+Block size: 1
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+FILES: Makefile rev3.txt 
+Block size: 1
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Files copy_1 and tmp2 are identical
+FILES: test.txt rev1.txt 
+Block size: 1024
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+FILES: copy.c rev2 
+Block size: 1024
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+FILES: Makefile rev3.txt 
+Block size: 1024
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Files copy_1024 and tmp2 are identical

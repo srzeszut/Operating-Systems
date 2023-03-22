@@ -1,0 +1,96 @@
+Found character c in file Makefile.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character c in file Makefile.
+Characters changed.
+change_sys
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character } in file change_lib.c.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character } in file change_lib.c.
+Characters changed.
+change_sys
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character = in file change_sys.c.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character = in file change_sys.c.
+Characters changed.
+change_sys
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Files tmp and tmp1.txt are identical
+Files tmp and tmp1.txt are identical
+Found character c in file Makefile.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character c in file Makefile.
+Characters changed.
+change_sys
+Real time: 0.010000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character } in file change_lib.c.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character } in file change_lib.c.
+Characters changed.
+change_sys
+Real time: 0.010000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character = in file change_sys.c.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character = in file change_sys.c.
+Characters changed.
+change_sys
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Files tmp and tmp1.txt are identical
+Files tmp and tmp1.txt are identical
+Found character c in file Makefile.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character c in file Makefile.
+Characters changed.
+change_sys
+Real time: 0.010000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character } in file change_lib.c.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character } in file change_lib.c.
+Characters changed.
+change_sys
+Real time: 0.010000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character = in file change_sys.c.
+Characters changed.
+change_lib
+Real time: 0.000000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Found character = in file change_sys.c.
+Characters changed.
+change_sys
+Real time: 0.010000 s, User time: 0.000000 s, System time: 0.000000 s
+
+Files tmp and tmp1.txt are identical
+Files tmp and tmp1.txt are identical

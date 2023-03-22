@@ -15,8 +15,13 @@ int getFileSize(const char* filepath, const struct stat* buf,int flag){
 
 
 
-int main(){
-    if(ftw(".",getFileSize,1)==-1){
+int main(int argc, char *argv[] ){
+    if(argc!=2){
+        fprintf(stderr, "Function needs 1 argument.\n");
+        return 0;
+    }
+    char* path = argv[1];
+    if(ftw(path,getFileSize,1)==-1){
         printf("error\n");
     }
     printf("Total: %ld\n",total_size);

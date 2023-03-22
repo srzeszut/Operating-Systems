@@ -12,6 +12,10 @@ bool findInFile(char sign, char* filepath){
     char buff;
 //    printf("character %c in file %s.\n", sign,filepath);
     int file = open(filepath,O_RDONLY);
+    if(file==-1){
+        printf("File not found %s.\n",filepath);
+        return false;
+    }
     while(read(file,&buff,1)==1){
         if(buff==sign){
 //            printf("BUFF %c char %c.\n", buff,sign);
@@ -65,6 +69,10 @@ void printTimes (TimeStruct* start,TimeStruct* end){
 
 int main(int argc, char *argv[])
 {
+    if(argc!=5){
+        fprintf(stderr, "Function needs 4 arguments.\n");
+        return 0;
+    }
     TimeStruct start=measureTime();
     char* to_find = argv[1];
     char* to_change = argv[2];

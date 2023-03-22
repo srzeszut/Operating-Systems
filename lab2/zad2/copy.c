@@ -4,6 +4,10 @@
 #include <sys/times.h>
 #include <time.h>
 #include <stdlib.h>
+
+
+size_t block_size=BLOCK_SIZE;
+
 void swap(char*left, char* right){
     char tmp =*left;
     *left=*right;
@@ -19,6 +23,10 @@ void changeOneByte(char* filepath_from, char* filepath_to){//obsluga bledów
     char buff;
     FILE* file_from = fopen(filepath_from,"rb");
     FILE* file_to = fopen(filepath_to,"w+b");
+    if(file_from==NULL){
+        printf("File not found %s.\n",filepath_from);
+        return;
+    }
     fseek(file_from, 0, SEEK_END);
 
     if(fseek(file_from, -1, SEEK_CUR)==0){
@@ -41,14 +49,17 @@ void changeOneByte(char* filepath_from, char* filepath_to){//obsluga bledów
 
 }
 void changeBlocks(char* filepath_from, char* filepath_to){
-    size_t block_size = 1024;
     char buff[block_size];
     FILE* file_from = fopen(filepath_from,"rb");
     FILE* file_to = fopen(filepath_to,"w+b");
+    if(file_from==NULL){
+        printf("File not found %s.\n",filepath_from);
+        return;
+    }
     fseek(file_from, 0, SEEK_END);
     long file_size = ftell(file_from);
     long rest =file_size%block_size;
-    printf("rest: %ld \n",rest);
+//    printf("rest: %ld \n",rest);
     if(fseek(file_from, -block_size, SEEK_CUR)==0){
         if(fread(buff,1,block_size,file_from)==block_size){
             reverse(buff,block_size);
@@ -77,17 +88,52 @@ void changeBlocks(char* filepath_from, char* filepath_to){
 
 
 }
+
+//time functions
+typedef struct{
+    clock_t realtime;
+    clock_t usertime;
+    clock_t systemtime;
+}TimeStruct;
+
+TimeStruct measureTime(){
+    TimeStruct ts;
+    struct tms start_tms;
+    ts.realtime=times(&start_tms);
+    ts.usertime=start_tms.tms_utime;
+    ts.systemtime=start_tms.tms_stime;
+    return ts;
+
+}
+void printTimes (TimeStruct* start,TimeStruct* end){
+    printf("Real time: %f s, ",10000*(double)(end->realtime-start->realtime)/CLOCKS_PER_SEC);
+    printf("User time: %f s, ",10000*(double)(end->usertime-start->usertime)/CLOCKS_PER_SEC);
+    printf("System time: %f s\n",10000*(double)(end->systemtime-start->systemtime)/CLOCKS_PER_SEC);
+}
 int main(int argc, char *argv[]){
+    if(argc!=3){
+        fprintf(stderr, "Function needs 2 arguments.\n");
+        return 0;
+    }
+
     char* file_from = argv[1];
     char* file_to = argv[2];
 
+
 //    printf("argc: %d\n",argc);
-    printf("ARGS: %s %s \n",file_from,file_to);
-    changeOneByte(file_from,file_to);
-    changeBlocks(file_from,file_to);//dorobic testy i pomiary czasu
+    printf("FILES: %s %s \n",file_from,file_to);
+    TimeStruct start=measureTime();
+    if(block_size ==1){
+        changeOneByte(file_from,file_to);
+    }
+    else{
+        changeBlocks(file_from, file_to);
+    }
 
-
-
+    TimeStruct stop=measureTime();
+    printf("Block size: %ld\n" ,block_size);
+    printTimes(&start,&stop);
     printf("\n");
+
 
 }
