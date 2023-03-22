@@ -1,0 +1,4 @@
+W zadaniu 1 funkcje biblioteczne są widocznie szybsze od funkcji systemowych.
+W zadaniu 2 czytanie bloku o wielkosci 1024 dziala zdecydowanie szybciej niz czytanie po jednym bajcie.
+W zadaniu 3 wyniki funkcji są takie same jak wynik wc --bytes.
+W zadaniu 4 wyniki sa takie same jak wyniki  wc --bytes.

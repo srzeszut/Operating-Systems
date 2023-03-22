@@ -7,8 +7,8 @@
 bool findInFile(char sign, char* filepath){
     char buff;
     FILE* file = fopen(filepath,"r");
-    if(file_from==NULL){
-        printf("File not found %s.\n",filepath_from);
+    if(file==NULL){
+        printf("File not found %s.\n",filepath);
         return false;
     }
     while(fread(&buff,1,1,file)==1){
@@ -67,7 +67,8 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Function needs 4 arguments.\n");
         return 0;
     }
-    TimeStruct start=measureTime();
+    clock_t start_time = clock();
+//    TimeStruct start=measureTime();
     char* to_find = argv[1];
     char* to_change = argv[2];
     char* file_to_find=argv[3];
@@ -83,9 +84,11 @@ int main(int argc, char *argv[])
         changeInFile(to_find[0],to_change[0],file_to_find,file_to_change);
         printf("Characters changed.\n");
     }
-//    printf("ARGS: %s %s %s %s\n",to_find,to_change,file_to_find,file_to_change);
-    TimeStruct stop=measureTime();
+    clock_t end_time = clock();
+    double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Time: %f\n",execution_time);
     printf("change_lib\n");
-    printTimes(&start,&stop);
     printf("\n");
+
 }
+

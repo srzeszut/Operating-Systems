@@ -122,7 +122,7 @@ int main(int argc, char *argv[]){
 
 //    printf("argc: %d\n",argc);
     printf("FILES: %s %s \n",file_from,file_to);
-    TimeStruct start=measureTime();
+    clock_t start_time = clock();
     if(block_size ==1){
         changeOneByte(file_from,file_to);
     }
@@ -130,9 +130,11 @@ int main(int argc, char *argv[]){
         changeBlocks(file_from, file_to);
     }
 
-    TimeStruct stop=measureTime();
+    clock_t end_time = clock();
+    double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Time: %f\n",execution_time);
     printf("Block size: %ld\n" ,block_size);
-    printTimes(&start,&stop);
+
     printf("\n");
 
 
