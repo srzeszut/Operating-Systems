@@ -1,0 +1,3 @@
+W zadaniu 1 i 2 calosc programu zawiera sie w funkcji main. Programy dzialaja poprawnie.
+W zadaniu 3 uzywam funkcji main do przeszukiwania folderu, a funkcji find odpowiada za
+sprawdzanie czy podanym plik nie zaczyna sie od lancucha znakow argv[2].

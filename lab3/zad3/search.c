@@ -17,7 +17,6 @@ void find(char* filepath,char* pattern,int block_size){
     char* buff=calloc(block_size,sizeof(char));
     if(file==NULL){
         perror("Problem with opening a file");
-        fclose(file);
         free(buff);
         return;
     }
@@ -59,17 +58,19 @@ int main(int argc, char *argv[]) {
     DIR* directory =opendir(path);
      if(directory==NULL){
        perror("Failed to open directory");
-          return 2;
+          return 1;
      }
 
      struct dirent* curr_file;
      pid_t child_pid;
 
      while((curr_file = readdir(directory))){
-         if(strcmp(curr_file->d_name,".")==0 || strcmp(curr_file->d_name,"..")==0) continue;
+         if(strcmp(curr_file->d_name,".")==0 || strcmp(curr_file->d_name,"..")==0) { continue; }
+//         printf("%s\n",path);
          strcpy(new_path,path);
          strcat(new_path,"/");
          strcat(new_path,curr_file->d_name);
+//         printf("%s\n",new_path);
          if(stat(new_path,&buf)==0) {
              if(S_ISDIR(buf.st_mode)){
                  child_pid=fork();
@@ -77,7 +78,7 @@ int main(int argc, char *argv[]) {
                     int err= execl(program_path,program_path,new_path,argv[2],NULL);
                     if(err==-1){
                         closedir(directory);
-                        return -1;
+                        return 1;
                     }
                  }
              }
@@ -87,7 +88,8 @@ int main(int argc, char *argv[]) {
          }
          else{
              perror("Failed to read information with stat() ");
-             return -1;
+             printf("%s\n",new_path);
+             return 1;
          }
      }
 
