@@ -20,13 +20,14 @@ void reset_handler(int sig, siginfo_t *info, void *context) {
 }
 void nodefer_handler(int signo, siginfo_t *info, void *context) {
     printf("Nodefer handler\n");
-    printf("number: %d.\n",number);
+    printf("number before : %d.\n",number);
     number++;
-    if(number<5){
+    if(number<4){
         kill(getpid(),SIGUSR1);
     }
-    number--;
-    printf("number: %d.\n",number);
+        printf("number after : %d.\n",number);
+//    number--;
+
 
 }
 void set_sigaction(struct sigaction sa,void (*handler)(int,siginfo_t *,void *), int flag){
@@ -51,6 +52,7 @@ void test_siginfo(struct sigaction sa){
 }
 
 void test_nodefer(struct sigaction sa){
+    printf("With nodefer flag:\n");
     set_sigaction(sa, nodefer_handler,SA_NODEFER);
     kill(getpid(),SIGUSR1);
     printf("\n");
@@ -67,7 +69,7 @@ int main() {
     printf("SA_SIGINFO test:\n");
     test_siginfo(sa);
     printf("#################################\n");
-    printf("SA_RESTART test:\n");
+    printf("SA_NODEFER test:\n");
     test_nodefer(sa);
     printf("#################################\n");
     printf("SA_RESETHAND test:\n");

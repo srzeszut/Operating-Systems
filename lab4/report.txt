@@ -1,4 +1,5 @@
 W zadaniu 2 testuje flagi: SA_SIGINFO, SA_RESETHAND, SA_NODEFER. Flaga SA_RESETHAND za pierwszym razem wywołuje handler
 ale poźniej juz ustawienie handlera zostaje zresetowane na wartość domyślną (SIG_DFL). Flaga SA_NODEFER powoduje, że w trakcie obsługi sygnału,
-ten sam sygnał może być ponownie wysłany do procesu, nie zostając zablokowany przez maskę sygnałów i dzieki temu program wypisuje liczby najpierw rosnąco portem malejaco.
+ten sam sygnał może być ponownie wysłany do procesu, nie zostając zablokowany przez maskę sygnałów i dzieki temu program wywołuje nowe handlery przed zakonczeniem obecnego,
+program bez flagi wyołuje nowy handler dopiero po zakonczeniu obecnego.
 W zadaniu 3 najpierw należy uruchomic catchera zapisac jego pid i uzyc go podczas wywolywania sendera.

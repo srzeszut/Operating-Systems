@@ -1,0 +1,4 @@
+W pliku out.txt znajdują się wyniki programu.
+Dla argumentu ignore oraz mask oba programy działają tak samo.
+Dla pending w wersji z exec sygnał dalej jest pending w przeciwienstwie
+do tego z fork gdzie przestaje być pending.

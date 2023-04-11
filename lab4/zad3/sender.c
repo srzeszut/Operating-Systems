@@ -6,6 +6,7 @@
 
 int confirmations=0;
 void handler(int signum, siginfo_t *info, void *context) {
+    printf("Recieved confirmation\n");
     confirmations++;
 
 }
@@ -24,9 +25,9 @@ int main(int argc , char* argv[]){
         fprintf(stderr,"SENDER: Function needs at least 2 arguments\n");
         return 1;
     }
-    sigset_t mask;
-    sigemptyset(&mask);
-    sigaddset(&mask, SIGUSR1);
+//    sigset_t mask;
+//    sigemptyset(&mask);
+//    sigaddset(&mask, SIGUSR1);
 
     struct sigaction act;
     act.sa_sigaction=handler;

@@ -1,0 +1,46 @@
+Raport sie nie towrzy automatycznie, ponieważ 2 sygnal kill w ostatnim tescie na to nie pozwala, jest to skopiowany output programu.
+
+./sigaction_test
+
+
+SA_SIGINFO test:
+Siginfo handler
+Received signal: 10
+PID: 2159
+UID: 1000
+Value: 2137
+#################################
+SA_NODEFER test:
+With nodefer flag:
+Nodefer handler
+number before : 0.
+Nodefer handler
+number before : 1.
+Nodefer handler
+number before : 2.
+Nodefer handler
+number before : 3.
+number after : 4.
+number after : 4.
+number after : 4.
+number after : 4.
+
+Without nodefer flag:
+Nodefer handler
+number before : 0.
+number after : 1.
+Nodefer handler
+number before : 1.
+number after : 2.
+Nodefer handler
+number before : 2.
+number after : 3.
+Nodefer handler
+number before : 3.
+number after : 4.
+
+#################################
+SA_RESETHAND test:
+Reset handler
+Received signal: 10
+User defined signal 1
