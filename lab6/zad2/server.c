@@ -11,15 +11,16 @@ void init(char* message){
     for(int i=0;i<MAX_NO_CLIENTS;i++){
         if(!active[i]){
             new_id=i;
+            break;
         }
     }
     if(new_id==-1){
         return;
     }
-    int key = atoi(message);
+
     clients[new_id].client_id=new_id;
-    clients[new_id].client_key= key;
-    int client_queue=msgget(key, 0666);
+    strcpy(clients[new_id].client_name,message);
+    mqd_t client_queue= create_queue(message);
     if (client_queue == -1){
         perror("Nie udało się otworzyć kolejki klienta");
         exit(EXIT_FAILURE);
@@ -31,12 +32,12 @@ void init(char* message){
     confirmation.msg_type = 6;
     sprintf(confirmation.message, "%d", clients[new_id].client_id);
 
-    if (msgsnd(client_queue, &confirmation, strlen(confirmation.message) + 1, 0) == -1)
+    if (mq_send(client_queue, (char*)&confirmation, strlen(confirmation.message) + 1, 0) == -1)
     {
         perror("Cannot send confirmation message.");
         exit(EXIT_FAILURE);
     }
-    printf("Client: %d %d %d\n",clients[new_id].client_id, clients[new_id].client_key, clients[new_id].client_queue);
+    printf("Active client: %d %s %d\n",clients[new_id].client_id,clients[new_id].client_name, clients[new_id].client_queue);
 
 }
 void list(int client_id);
@@ -49,14 +50,16 @@ void end();
 
 int main(){
 
+    printf("SERVER\n");
 
-    key_t server_key = ftok(HOME_PATH, SERVER_KEY);
-    server_queue = msgget(server_key, IPC_CREAT | 0666);
+    mq_unlink(SERVER_QUEUE_NAME);
+    server_queue = create_queue(SERVER_QUEUE_NAME);
     if (server_queue == -1)
     {
         perror("Cannot create server queue.");
         exit(EXIT_FAILURE);
     }
+
     msgBuff message;
     time_t rawtime;
     struct tm * timeinfo;
@@ -70,24 +73,19 @@ int main(){
 
 
     while(1){
-        if(msgrcv(server_queue,&message,MSG_SIZE,0,0)>0){
-
-
-            if (message.msg_type != INIT) {
+        mq_receive(server_queue,(char*) &message,MSG_SIZE,NULL);
+        if (message.msg_type != INIT) {
                 time(&rawtime);
                 timeinfo = localtime(&rawtime);
                 fprintf(log_file,"\nCurrent local time and date: %s", asctime(timeinfo));
                 fprintf(log_file,"ID: %d Message type: %ld Message: %s", message.client_id,message.msg_type ,message.message);
             }
-//        printf("msg: %ld %s\n",message.msg_type,message.message);
             switch (message.msg_type) {
                 case INIT: {
-//                    printf("init\n");
                     init(message.message);
                 }
                     break;
                 case LIST: {
-//                    printf("list\n");
                     list(message.client_id);
                 }
                     break;
@@ -106,7 +104,7 @@ int main(){
                     break;
 
             }
-        }
+
 
     }
 
@@ -118,15 +116,15 @@ void send_message(char* text,jobs type,int client_id){
     strcpy(message.message,text);
     message.client_id=client_id;
     message.msg_type=type;
-    msgsnd(clients[client_id].client_queue, &message, MSG_SIZE, 0);
+    mq_send(clients[client_id].client_queue, (char*) &message, MSG_SIZE, 0);
 }
 void list(int client_id){
     char message[MAX_MSG_SIZE]="";
     printf("active: ");
     for(int i=0;i<MAX_NO_CLIENTS;i++){
-        printf(" %d ",active[i]);
+//        printf(" %d ",active[i]);
         if(active[i]){
-            sprintf(message + strlen(message), "ID %d is running.\n", i);
+            sprintf(message + strlen(message), "Client with ID: %d is running.\n", i);
         }
     }
     printf("\n");
@@ -151,8 +149,6 @@ void stop(int client_id){
 
     active[client_id]=false;
     clients[client_id].client_id=-1;
-
-    clients[client_id].client_key=-1;
 }
 
 void end(){
@@ -160,12 +156,12 @@ void end(){
     for(int i=0;i<MAX_NO_CLIENTS;i++) {
         if (active[i]) {
             send_message("", STOP, i);
-            msgrcv(server_queue,&message,MSG_SIZE,STOP,0);
+            mq_receive(server_queue,(char*)&message,MSG_SIZE,NULL);
         }
     }
     fclose(log_file);
 
-    msgctl(server_queue, IPC_RMID, NULL);
+    mq_close(server_queue);
     printf("ending.\n");
     exit(0);
 

@@ -28,6 +28,7 @@ void server_message();
 
 
 int main(){
+    printf("CLIENT\n");
     srand(time(NULL));
     server_key = ftok(HOME_PATH, SERVER_KEY);
     server_queue = msgget(server_key,  0666);
@@ -36,7 +37,6 @@ int main(){
         perror("Cannot create server queue.");
         exit(EXIT_FAILURE);
     }
-
     client_key = ftok(HOME_PATH, rand() % (100)+1);
     client_queue = msgget(client_key,  IPC_CREAT |0666);
     if (client_queue == -1)

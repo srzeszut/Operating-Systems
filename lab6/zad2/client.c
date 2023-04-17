@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 int client_id;
+char client_name[MAX_NAME] ;
 mqd_t server_queue;
 mqd_t client_queue;
 
@@ -24,23 +25,37 @@ void send_message(char* text,jobs type);
 void send_message_to_client(char* text,jobs type,int client_to);
 void server_message();
 
+void get_client_name(){
+    int len=6;
+    client_name[0]='/';
+    srand(time(NULL));
+    for (int i = 1; i < len; i++) {
+        client_name[i] = rand() % 26 + 'A';
+    }
+    client_name[len] = '\0';
+}
+
 
 int main(){
 
-    server_queue = mq_open(SERVER_QUEUE_NAME, O_WRONLY);
+    printf("CLIENT\n");
+
+    server_queue = mq_open(SERVER_QUEUE_NAME,O_RDWR);
     if (server_queue == -1)
     {
         perror("Cannot create server queue.");
         exit(EXIT_FAILURE);
     }
-
-    client_queue = mq_open(CLIENT_QUEUE_NAME, O_CREAT | O_RDWR, 0666, NULL);
-    client_queue = msgget(client_key,  IPC_CREAT |0666);
+    get_client_name();
+    mq_unlink(client_name);
+    client_queue = create_queue(client_name);
+//    free(client_name);
     if (client_queue == -1)
     {
-        perror("Cannot create server queue.");
+        perror("Cannot create client queue.");
         exit(EXIT_FAILURE);
     }
+
 
     signal(SIGINT,stop);
     init();
@@ -84,8 +99,6 @@ int main(){
             words[i++] = token;
             token = strtok(NULL, " ");
         }
-//        printf("commsnd: %s",words[0]);
-//        printf("%d",strcmp(words[0], "LIST"));
         if (strcmp(words[0], "LIST\n") == 0) {
             send_message("",LIST);
             list();
@@ -120,11 +133,13 @@ int main(){
 }
 
 void send_message(char* text,jobs type){
-//    char message[MAX_MSG_SIZE];
-//    strcpy(message,text);
-//    message.client_id=client_id;
-//    message.msg_type=type;
-    mq_send(server_queue, text, strlen(text)+1, type);
+
+    msgBuff message;
+    strcpy(message.message,text);
+    message.client_id=client_id;
+    message.msg_type=type;
+    mq_send(server_queue, (char*) &message, MSG_SIZE, 0);
+//    printf("message sent.\n");
 }
 void send_message_to_client(char* text,jobs type,int client_to){
     msgBuff message;
@@ -132,14 +147,17 @@ void send_message_to_client(char* text,jobs type,int client_to){
     message.client_id=client_id;
     message.client_to=client_to;
     message.msg_type=type;
-    msgsnd(server_queue, &message, MSG_SIZE, 0);
+    mq_send(server_queue, (char*) &message, MSG_SIZE, 0);
+//    printf("message sent.\n");
 }
 void init(){
     msgBuff init_msg;
-    init_msg.msg_type = 1;
-    sprintf(init_msg.message, "%d", client_key);
+    init_msg.msg_type = INIT;
+    strcpy(init_msg.message, client_name);
+//    printf("%d\n",MSG_SIZE);
+//    printf("%ld\n",sizeof((char*) &init_msg));
 
-    if (msgsnd(server_queue, &init_msg, MSG_SIZE, 0) == -1)
+    if (mq_send(server_queue, (char*) &init_msg, MSG_SIZE, 0) == -1)
     {
         perror("Cannot send innit message.");
         exit(0);
@@ -147,7 +165,7 @@ void init(){
 
     msgBuff confirmation;
     int wait=0;
-    while(msgrcv(client_queue,&confirmation,MSG_SIZE,6,IPC_NOWAIT)<0){
+    while(mq_receive(client_queue,(char*) &confirmation,MSG_SIZE,NULL)==-1){
         if(wait>3){
             fprintf(stderr,"Recieved no confirmation from a server\n");
             exit(EXIT_FAILURE);
@@ -158,16 +176,20 @@ void init(){
 
     }
     client_id= atoi(confirmation.message);
-    printf("client id: %d\n",client_id);
+    printf("Client id: %d\n",client_id);
 }
 void list(){
     msgBuff message;
-    msgrcv(client_queue,&message,MSG_SIZE,LIST,0);
+    mq_receive(client_queue,(char*)&message,MSG_SIZE,NULL);
     printf("%s\n",message.message);
 }
 void server_message(){
     msgBuff message;
-    while(msgrcv(client_queue,&message,MSG_SIZE,0,IPC_NOWAIT)>=0){
+    struct timespec my_time;
+
+    clock_gettime(CLOCK_REALTIME, &my_time);
+    my_time.tv_sec += 0.1;
+    while (mq_timedreceive(client_queue, (char *) &message,MSG_SIZE, NULL, &my_time) != -1){//time
         if(message.msg_type==STOP){
             stop();
         }
@@ -179,7 +201,9 @@ void server_message(){
 }
 void stop(){
     send_message("",STOP);
-    msgctl(client_queue, IPC_RMID, NULL);
+    mq_close(client_queue);
+    mq_unlink(client_name);
     printf("ending.\n");
+
     exit(0);
 }

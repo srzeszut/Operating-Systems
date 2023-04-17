@@ -11,6 +11,7 @@ void init(char* message){
     for(int i=0;i<MAX_NO_CLIENTS;i++){
         if(!active[i]){
             new_id=i;
+            break;
         }
     }
     if(new_id==-1){
@@ -48,6 +49,7 @@ void stop(int client_id);
 void end();
 
 int main(){
+    printf("SERVER\n");
 
 
     key_t server_key = ftok(HOME_PATH, SERVER_KEY);
@@ -71,7 +73,6 @@ int main(){
 
     while(1){
         if(msgrcv(server_queue,&message,MSG_SIZE,0,0)>0){
-
 
         if (message.msg_type != INIT) {
                 time(&rawtime);

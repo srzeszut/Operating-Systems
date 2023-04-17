@@ -15,9 +15,13 @@ client: $(CL).c
 	$(CC) $(CFLAGS) $(CL).o -o $(CL)
 
 test: server client
-	gnome-terminal --command "./server"
-	gnome-terminal --command "./client"
-	gnome-terminal --command "./client"
+	gnome-terminal  -- ./server
+	sleep 1
+	gnome-terminal  -- ./client
+	sleep 1
+	gnome-terminal  -- ./client
+
+
 
 
 

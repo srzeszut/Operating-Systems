@@ -9,7 +9,8 @@
 
 #define MAX_MSG_SIZE 256
 #define MAX_NO_CLIENTS 5
-#define SERVER_QUEUE_NAME "/server_queue"
+#define MAX_NAME 6
+#define SERVER_QUEUE_NAME "/SERVER"
 
 
 typedef enum {
@@ -30,5 +31,15 @@ typedef struct{
 
 typedef struct{
     int client_id;
-    int client_queue;
+    char client_name[MAX_NAME];
+    mqd_t client_queue;
 } client;
+
+const int MSG_SIZE = sizeof(msgBuff);
+mqd_t create_queue(const char* name) {
+    struct mq_attr attr;
+    attr.mq_flags = O_NONBLOCK;
+    attr.mq_maxmsg = MAX_NO_CLIENTS;
+    attr.mq_msgsize = MSG_SIZE;
+    return mq_open(name, O_RDWR | O_CREAT, 0666, &attr);
+}
