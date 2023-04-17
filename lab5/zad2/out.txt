@@ -1,0 +1,24 @@
+Sum: 3.141593 No_proceesses: 1 Precision: 0.0000000100 Interval: 1.000000
+Time: 0.375522s
+
+Sum: 3.141592 No_proceesses: 5 Precision: 0.0000000100 Interval: 0.200000
+Time: 0.223043s
+
+Sum: 3.141591 No_proceesses: 15 Precision: 0.0000000100 Interval: 0.066667
+Time: 0.239481s
+
+Sum: 3.141594 No_proceesses: 50 Precision: 0.0000000100 Interval: 0.020000
+Time: 0.187564s
+
+Sum: 3.141893 No_proceesses: 1 Precision: 0.0001000000 Interval: 1.000000
+Time: 0.000278s
+
+Sum: 3.143161 No_proceesses: 5 Precision: 0.0001000000 Interval: 0.200000
+Time: 0.000628s
+
+Sum: 3.143229 No_proceesses: 15 Precision: 0.0001000000 Interval: 0.066667
+Time: 0.001435s
+
+Sum: 3.155314 No_proceesses: 50 Precision: 0.0001000000 Interval: 0.020000
+Time: 0.004736s
+

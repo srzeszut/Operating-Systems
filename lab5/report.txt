@@ -1,0 +1,6 @@
+W zadaniu 2 przy dużej precyzji najszybciej wykonuje sie program z 5 i 10 procesami, 50 jest troche wolniejsze, a najwolniejszy jest 1 proces.
+Przy mniejszej przecyzji 1 proces okzajue sie najszybszy a zwiekszanie liczby procesow tylko zwieksza czas.
+w zadaniu 3 wykorzystuje program count i funkcje exec do liczenia czesci calki. Przy dużej precyzji program najszybciej wykonuje sie
+ dla okolo 50 procesow. Dla 10 i 150 jest nieco wolniejszy jednak
+przy wiekszych ilosciach jak 1500 czy 2000 czas zaczyna sie zwiekszac.W przypadku malej przecycji
+ najszybszy jest jednen proces i zwiekszanie ich liczby tylko wydluza czas dzialania.
