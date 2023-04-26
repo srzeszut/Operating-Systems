@@ -1,0 +1,2 @@
+W zadaniu 1 znajduje sie wersja dla Systemu V a w folderze zad2 wersja POSIX. Przy odpaleniu make automatycznie tworzy sie plik out.txt z wynikiem wywolania programu.
+Programy zawieraja dolaczone pliki semph.h i queue.h, w ktorych sa zdefiniowane funkcje pomocnicze do zarzadzaniem semaforami oraz do zarzadzania pamiecia wspolna.

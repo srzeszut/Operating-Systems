@@ -99,11 +99,12 @@ int main(){
 
         }
         else if(strcmp(words[0], "2ONE") == 0){
-            if(strlen(words[1])==0){
-                fprintf(stderr,"You must enter ID");
+            if(atoi(words[1])==0 && strcmp(words[1],"0")!=0){
+                fprintf(stderr,"You must enter ID\n");
             }
             else
             {
+//                printf("slowo: %d\n",atoi(words[1]));
                 send_message_to_client(words[2],ONE,atoi(words[1]));
             }
         }

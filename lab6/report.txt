@@ -1,0 +1,1 @@
+Aby uruchomic serwer i 2 klientow od razu, wystarczy wspisac "make test" i Makefile odpali 3 terminale kazdy z osobnym programem.

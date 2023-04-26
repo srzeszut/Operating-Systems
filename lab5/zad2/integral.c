@@ -49,7 +49,7 @@ int main(int argc, char* argv[]){
 
     int* sums = calloc(no_processes,sizeof(int));
     struct timespec start, end;
-    clock_gettime(CLOCK_MONOTONIC, &start);
+    clock_gettime(CLOCK_REALTIME, &start);
 
     for( int i=0;i<no_processes;i++){
         int fd[2];
@@ -86,7 +86,7 @@ int main(int argc, char* argv[]){
     printf("Sum: %f No_proceesses: %d Precision: %.10f Interval: %lf\n", answer,no_processes,precision,interval);
 
     free(sums);
-    clock_gettime(CLOCK_MONOTONIC, &end);
+    clock_gettime(CLOCK_REALTIME, &end);
     double execution_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
     printf("Time: %fs\n",execution_time);
     printf("\n");

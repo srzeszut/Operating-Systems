@@ -109,11 +109,12 @@ int main(){
 
         }
         else if(strcmp(words[0], "2ONE") == 0){
-            if(strlen(words[1])==0){
-                fprintf(stderr,"You must enter ID");
+            if(atoi(words[1])==0 && strcmp(words[1],"0")!=0){
+                fprintf(stderr,"You must enter ID\n");
             }
             else
             {
+                printf("%s\n",words[1]);
                 send_message_to_client(words[2],ONE,atoi(words[1]));
             }
         }
@@ -157,15 +158,16 @@ void init(){
 //    printf("%d\n",MSG_SIZE);
 //    printf("%ld\n",sizeof((char*) &init_msg));
 
+    msgBuff confirmation;
+//    printf("%s\n",confirmation.message);
+    int wait=0;
     if (mq_send(server_queue, (char*) &init_msg, MSG_SIZE, 0) == -1)
     {
         perror("Cannot send innit message.");
         exit(0);
     }
-
-    msgBuff confirmation;
-    int wait=0;
-    while(mq_receive(client_queue,(char*) &confirmation,MSG_SIZE,NULL)==-1){
+    int ret;
+    while((ret=mq_receive(client_queue, (char*) &confirmation,MSG_SIZE,NULL))<0){
         if(wait>3){
             fprintf(stderr,"Recieved no confirmation from a server\n");
             exit(EXIT_FAILURE);
@@ -175,7 +177,10 @@ void init(){
         wait++;
 
     }
+//    printf("r:%d\n",ret);
     client_id= atoi(confirmation.message);
+//    printf("%s\n",confirmation.message);
+//    printf("%s\n",(char*) &confirmation.message);
     printf("Client id: %d\n",client_id);
 }
 void list(){

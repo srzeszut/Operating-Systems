@@ -30,12 +30,16 @@ void init(char* message){
 
     msgBuff confirmation;
     confirmation.msg_type = 6;
-    sprintf(confirmation.message, "%d", clients[new_id].client_id);
+    sprintf(confirmation.message, "%d", new_id);
+//    printf("id: %s\n",confirmation.message);
 
-    if (mq_send(client_queue, (char*)&confirmation, strlen(confirmation.message) + 1, 0) == -1)
+    if (mq_send(client_queue, (char*) &confirmation, MSG_SIZE, 0) == -1)
     {
         perror("Cannot send confirmation message.");
         exit(EXIT_FAILURE);
+    }
+    else{
+//        printf("message sent\n");
     }
     printf("Active client: %d %s %d\n",clients[new_id].client_id,clients[new_id].client_name, clients[new_id].client_queue);
 
@@ -82,6 +86,7 @@ int main(){
             }
             switch (message.msg_type) {
                 case INIT: {
+//                    printf("%s\n",message.message);
                     init(message.message);
                 }
                     break;
