@@ -1,0 +1,4 @@
+W zadaniu 1 w funkcji update_grid_multi za 1 razem tworze watki(po jednym dla kazdej komorki), a pozniej tylko budze je za pomoca pthread_kill.
+Funkcja worker sluzy do aktualizacji komórki dla danego watku.
+W zadaniu 2 postepuje analogicznie jak w zadaniu 1 jednak ilośc wątków jest narzucona z gory,
+wiec kazdy watek dostaje rowna ilosc(jesli po rozdzieleniu zostana jakies komorki to po kolei kazdy watek dostajke po jednej) komorek, ktore aktual;izuje w funkcji worker.
