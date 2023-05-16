@@ -1,0 +1,18 @@
+Zrealizowalem pełne rozwiązanie zadania - 100%.
+
+W programie zdefiniowane są trzy zmienne warunkowe: reindeer_cv, elf_cv i santa_cv,
+które pomagają w synchronizacji wątków. Są one używane do czekania na sygnały od Mikołaja oraz do budzenia go w odpowiednich momentach.
+Mikołaj, reprezentowany przez funkcję santa_claus, działa w nieskończonej pętli.
+Mikołaj śpi, dopóki nie zgłoszą się odpowiednia liczba reniferów lub trzy elfy z problemami.
+Gdy warunek jest spełniony, Mikołaj zostaje obudzony i podejmuje odpowiednie działania.
+Jeśli zgłaszają się renifery, Mikołaj dostarcza zabawki. Jeśli zgłaszają się elfy, Mikołaj rozwiązuje ich problemy.
+Następnie Mikołaj zasypia, a cykl się powtarza.
+Funkcja reindeer reprezentuje zachowanie reniferów. Każdy renifer śpi przez pewien losowy czas,
+a następnie próbuje zablokować mutex santa_mutex, aby zgłosić swoją obecność. Gdy zgłosi się
+odpowiednia liczba reniferów, Mikołaj zostaje obudzony za pomocą pthread_cond_signal i renifery dostarczają zabawki.
+Funkcja elf reprezentuje zachowanie elfów. Elfowie pracują przez pewien losowy czas,
+a następnie próbują zablokować mutex santa_mutex, aby zgłosić swoje problemy.
+Jeśli jest miejsce dla trzech elfów, elf dodaje swoje ID do tablicy waiting_elves_ids i obudza Mikołaja za pomocą pthread_cond_signal.
+ Jeśli miejsce nie jest dostępne, elf oczekuje na sygnał od Mikołaja, który go wybudzi.
+Wszystkie wątki są tworzone w funkcji main, a następnie po zakończeniu działania programu
+wątek główny czeka na zakończenie pracy wątku Mikołaja za pomocą pthread_join.

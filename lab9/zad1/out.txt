@@ -1,0 +1,32 @@
+Mikołaj: śpię.
+Elf 1: czekam 0 elfów na Mikołaja.
+Elf 2: czekam 1 elfów na Mikołaja.
+Elf 4: czekam 2 elfów na Mikołaja.
+Elf 4: wybudzam Mikołaja.
+Elf 4: Mikołaj rozwiązuje problem.
+Mikołaj: wybudzam się.
+Mikołaj: rozwiązuję problemy elfów. 1 2 4
+Mikołaj: zasypiam.
+Mikołaj: śpię.
+Elf 2: Mikołaj rozwiązuje problem.
+Elf 6: czekam 0 elfów na Mikołaja.
+Elf 9: czekam 1 elfów na Mikołaja.
+Elf 8: czekam 2 elfów na Mikołaja.
+Elf 8: wybudzam Mikołaja.
+Elf 8: Mikołaj rozwiązuje problem.
+Elf 3: czekam 3 elfów na Mikołaja.
+Elf 3: samodzielnie rozwiązuję swój problem.
+Elf 10: czekam 3 elfów na Mikołaja.
+Elf 10: samodzielnie rozwiązuję swój problem.
+Elf 5: czekam 3 elfów na Mikołaja.
+Elf 5: samodzielnie rozwiązuję swój problem.
+Elf 1: Mikołaj rozwiązuje problem.
+Elf 7: czekam 3 elfów na Mikołaja.
+Elf 7: samodzielnie rozwiązuję swój problem.
+Renifer 9: czekam 0 reniferów na Mikołaja.
+Mikołaj: wybudzam się.
+Mikołaj: rozwiązuję problemy elfów. 6 9 8
+Mikołaj: zasypiam.
+Mikołaj: śpię.
+Elf 6: Mikołaj rozwiązuje problem.
+^C
